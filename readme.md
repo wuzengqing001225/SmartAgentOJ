@@ -1,4 +1,4 @@
-# Smart OJ
+# Smart Agent OJ
 
 ## What Is This
 
@@ -96,10 +96,10 @@ Each mode's AI behavior is governed by a distinct system prompt:
 If you find our work useful, please give us credit by citing:
 
 ```bibtex
-@software{smartoj2026,
+@software{smartagentoj2026,
   author       = {Zengqing Wu and Chuan Xiao},
-  title        = {SmartOJ: An AI-Assisted Training Tool for Competitive Programming},
+  title        = {SmartAgentOJ: An AI-Assisted Training Tool for Competitive Programming},
   year         = {2026},
-  url          = {https://github.com/wuzengqing001225/SmartOJ},
+  url          = {https://github.com/wuzengqing001225/SmartAgentOJ},
 }
 ```
