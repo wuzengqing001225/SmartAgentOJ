@@ -17,8 +17,6 @@ node app.js
 - **Erosion of fundamentals**: Over-relying on AI for code generation leaves students unable to write basic templates by hand.
 - **Thinking and coding entangled**: When tackling hard problems, constantly switching between the two means neither gets practiced deeply.
 
-![Screenshot](https://github.com/wuzengqing001225/SmartAgentOJ/blob/main/image/image.png?raw=true)
-
 ## Two Training Modes
 
 | Mode | Best For | What AI Does |
