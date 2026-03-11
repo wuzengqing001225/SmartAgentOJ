@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="application-id" content="WmVuZ3FpbmcgV3UgfCB3dXplbmdxaW5nQG91dGxvb2suY29t">
+  <meta name="generator" content="SmartOJ">
+  <title>SmartOJ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- ====== Header ====== -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-left">
+        <h1 class="logo">Smart<span class="logo-accent">OJ</span></h1>
+        <div class="mode-switch">
+          <button class="mode-btn active" data-mode="handwrite" title="手写模式：独立完成代码">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            手写
+          </button>
+          <button class="mode-btn" data-mode="verify" title="思路验证模式：描述思路，AI 帮你理清并生成代码">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            思路
+          </button>
+        </div>
+        <!-- 回顾入口：在 header 右侧 -->
+        <button id="reviewHeaderBtn" class="review-header-btn" title="学习回顾记录">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+          回顾
+        </button>
+      </div>
+      <div class="header-right">
+        <div class="problem-loader">
+          <input type="text" id="problemId" placeholder="输入题目编号…" class="problem-input">
+          <button id="loadProblem" class="icon-btn" title="加载题目 (Enter)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 10 4 15 9 20"/><path d="M20 4v7a4 4 0 01-4 4H4"/></svg>
+          </button>
+        </div>
+        <button id="settingsBtn" class="icon-btn" title="设置与用量">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ====== Problem banner (collapsible, fixed height when open) ====== -->
+  <div class="problem-banner collapsed" id="problemBanner">
+    <div class="banner-inner">
+      <div class="banner-header">
+        <h2 id="problemTitle" class="problem-title">未加载题目</h2>
+        <div class="banner-meta" id="bannerMeta"></div>
+        <button class="btn-toggle" id="toggleProblem" title="展开 / 折叠">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+      <!-- 固定高度，内部滚动 -->
+      <div class="problem-body" id="problemBody">
+        <div id="problemDesc" class="problem-desc">在上方输入题目编号来加载题目，或直接粘贴题面文本。</div>
+        <div id="problemSamples" class="problem-samples"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== Main workspace ====== -->
+  <div class="workspace">
+
+    <!-- Left: Code Editor -->
+    <div class="panel panel-editor">
+      <div class="panel-header">
+        <span class="panel-label">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          代码编辑器
+        </span>
+        <button id="compileBtn" class="btn-compile" title="编译运行 (Ctrl+Enter)">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </button>
+      </div>
+      <div class="editor-wrap">
+        <textarea id="codeEditor" spellcheck="false" placeholder="#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+
+    return 0;
+}"></textarea>
+      </div>
+      <div class="stdin-section">
+        <div class="section-label">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 10 4 15 9 20"/><path d="M20 4v7a4 4 0 01-4 4H4"/></svg>
+          标准输入
+        </div>
+        <textarea id="stdinInput" rows="3" placeholder="测试数据…"></textarea>
+      </div>
+    </div>
+
+    <!-- Right: Tabbed panel -->
+    <div class="panel panel-chat" id="panelChat">
+
+      <!-- Tab bar（回顾模式时隐藏） -->
+      <div class="panel-header chat-panel-header" id="chatPanelHeader">
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="qa">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            问答
+          </button>
+          <button class="tab-btn" data-tab="code">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            代码提问
+          </button>
+        </div>
+        <!-- 问答 Tab 操作区 -->
+        <div class="tab-actions" id="qaActions">
+          <button id="generateCodeBtn" class="icon-btn" style="display:none" title="按当前思路生成 C++ 代码">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </button>
+          <button id="summarizeQaBtn" class="icon-btn" title="总结本次对话，加入回顾">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </button>
+        </div>
+        <!-- 代码提问 Tab 操作区（操作在内部） -->
+        <div class="tab-actions" id="codeActions" style="display:none"></div>
+      </div>
+
+      <!-- ── 问答 Tab ── -->
+      <div id="tab-qa" class="tab-pane active">
+        <div class="quick-questions">
+          <div class="section-label">可以问我：</div>
+          <div class="qq-list" id="qqList"></div>
+        </div>
+        <div class="chat-messages" id="qaChatMessages">
+          <div class="chat-welcome">
+            <p>选择模式后，在下方输入问题或描述思路。</p>
+            <p class="chat-welcome-sub">通过提问引导思考，不直接给答案。</p>
+          </div>
+        </div>
+        <div class="chat-input-wrap">
+          <textarea id="chatInput" rows="2" placeholder="描述思路或提问…"></textarea>
+          <button id="sendBtn" class="btn-send" title="发送 (Enter)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- ── 代码提问 Tab ── -->
+      <div id="tab-code" class="tab-pane">
+        <div class="code-qa-empty" id="codeQaEmpty">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--text-muted)"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <p>AI 将针对编辑器里的代码出题，<br>检验你是否真正理解了每一行。</p>
+          <button id="genQaBtn" class="btn-gen-qa">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            生成理解问题
+          </button>
+        </div>
+        <div class="code-qa-wrap" id="codeQaWrap" style="display:none">
+          <div class="code-qa-toolbar">
+            <span class="qa-progress" id="qaProgress">0 / 0 已回答</span>
+            <button id="summarizeCodeBtn" class="icon-btn" title="总结本次代码学习，加入回顾">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </button>
+            <button id="regenQaBtn" class="icon-btn" title="重新生成问题">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+            </button>
+          </div>
+          <div class="code-qa-list" id="codeQaList"></div>
+        </div>
+      </div>
+
+      <!-- ── 回顾 View（header 按钮控制，与 Tab Pane 互斥） ── -->
+      <div id="reviewView">
+        <div class="review-toolbar">
+          <span class="review-count" id="reviewCount">共 0 条记录</span>
+          <button id="clearReviewBtn" class="icon-btn" title="清空所有回顾记录">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+          </button>
+        </div>
+        <div class="review-table-wrap">
+          <div class="review-empty" id="reviewEmpty">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--text-muted)"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+            <p>还没有回顾记录。</p>
+            <p class="chat-welcome-sub">对话结束后，点击「总结」按钮生成学习要点。</p>
+          </div>
+          <table class="review-table" id="reviewTable" style="display:none">
+            <thead>
+              <tr>
+                <th class="col-type">类型</th>
+                <th class="col-summary">问题概述</th>
+                <th class="col-example">对话中的例子</th>
+                <th class="col-problem">题号</th>
+                <th class="col-notes">我的笔记</th>
+                <th class="col-del"></th>
+              </tr>
+            </thead>
+            <tbody id="reviewTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ====== Compile Output ====== -->
+  <div class="output-bar collapsed" id="outputBar">
+    <div class="output-header">
+      <span class="panel-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+        编译输出
+      </span>
+      <div class="output-meta" id="outputMeta"></div>
+      <button class="btn-toggle" id="toggleOutput" title="展开 / 折叠">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+      </button>
+    </div>
+    <pre class="output-content" id="outputContent">等待编译…</pre>
+  </div>
+
+  <!-- ====== Settings Modal ====== -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>设置与用量</h3>
+        <button class="icon-btn-xs" id="closeSettings" title="关闭">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="usage-section">
+          <div class="section-label">API 用量统计</div>
+          <div class="usage-grid">
+            <div class="usage-card">
+              <div class="usage-label">今日</div>
+              <div class="usage-value" id="usageToday">—</div>
+              <div class="usage-sub" id="usageTodayCost">—</div>
+            </div>
+            <div class="usage-card">
+              <div class="usage-label">本周</div>
+              <div class="usage-value" id="usageWeek">—</div>
+              <div class="usage-sub" id="usageWeekCost">—</div>
+            </div>
+            <div class="usage-card">
+              <div class="usage-label">累计</div>
+              <div class="usage-value" id="usageTotal">—</div>
+              <div class="usage-sub" id="usageTotalCost">—</div>
+            </div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <div class="section-label">DeepSeek API Key</div>
+          <div class="apikey-row">
+            <input type="password" id="apiKeyInput" placeholder="粘贴新 Key 以覆盖…" class="settings-input" autocomplete="off">
+            <button id="saveApiKeyBtn" class="btn-save-key">保存</button>
+          </div>
+          <p class="settings-hint" id="apiKeyStatus">正在检查…</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== Toast ====== -->
+  <div class="toast" id="toast"></div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

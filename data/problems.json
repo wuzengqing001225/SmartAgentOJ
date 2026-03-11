@@ -1,0 +1,16 @@
+{
+  "1000": {
+    "id": "1000",
+    "title": "Hello World!",
+    "description": "Print 'Hello World!'",
+    "outputDesc": "Output 'Hello World!'",
+    "samples": [
+      {
+        "input": "",
+        "output": "Hello World!"
+      }
+    ],
+    "timeLimit": "1",
+    "memoryLimit": "128"
+  }
+}
