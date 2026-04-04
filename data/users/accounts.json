@@ -1,0 +1,14 @@
+{
+  "a1b2c3": {
+    "id": "a1b2c3",
+    "email": "admin@localhost",
+    "username": "admin",
+    "displayName": "超级管理员",
+    "studentId": "",
+    "role": "superadmin",
+    "createdAt": "2026-04-04T00:00:00.000Z",
+    "loginFailCount": 0,
+    "locked": false,
+    "lockedAt": null
+  }
+}

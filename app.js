@@ -21,7 +21,7 @@ server(app);
 
 // --- Start ---
 app.listen(PORT, () => {
-  console.log(`Smart OJ running at http://localhost:${PORT}`);
+  console.log(`SNG SmartOJ running at http://localhost:${PORT}`);
 });
 
 // --- Error handling ---

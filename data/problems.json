@@ -1,16 +1,32 @@
 {
-  "1000": {
-    "id": "1000",
-    "title": "Hello World!",
-    "description": "Print 'Hello World!'",
-    "outputDesc": "Output 'Hello World!'",
-    "samples": [
-      {
-        "input": "",
-        "output": "Hello World!"
-      }
-    ],
-    "timeLimit": "1",
-    "memoryLimit": "128"
-  }
+    "1000": {
+      "id": "1001",
+      "title": "A+B Problem",
+      "description": "输入两个整数，输出它们的和",
+      "inputDesc": "输入两个整数，用空格隔开",
+      "outputDesc": "输出它们的和",
+      "samples": [
+        {
+          "input": "1 2",
+          "output": "3"
+        }
+      ],
+      "timeLimit": "1",
+      "memoryLimit": "128"
+    },
+    "1001": {
+      "id": "1001",
+      "title": "A^B Problem ",
+      "description": "输入两个整数，输出它们的幂",
+      "inputDesc": "输入两个整数，用空格隔开",
+      "outputDesc": "输出它们的幂",
+      "samples": [
+        {
+          "input": "2 3",
+          "output": "8"
+        }
+      ],
+      "timeLimit": "1",
+      "memoryLimit": "128"
+    }
 }

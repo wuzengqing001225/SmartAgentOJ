@@ -1,0 +1,12 @@
+[
+  {
+    "id_a": "1000",
+    "id_b": "1001",
+    "relation": "SAME_TECHNIQUE",
+    "direction": "BOTH",
+    "confidence": 0.8,
+    "reason": "都是基础模拟题，使用直接计算的核心技巧",
+    "similarity": 0.7182478904724121,
+    "source": "auto"
+  }
+]

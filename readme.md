@@ -11,6 +11,8 @@ npm install
 node app.js
 ```
 
+**Test account (default seed in `data/users/`):** super admin — username `admin`, password `123456`. Replace or remove these files and use strong credentials in any shared or public deployment.
+
 ## Problems It Solves
 
 - **Slow feedback loop**: Students have to write a full solution before they can validate their approach, often discovering an hour later that their direction was wrong. There is no way to quickly ask "is my thinking correct?"
@@ -90,6 +92,23 @@ Uses the DeepSeek API, configured via the `DEEPSEEK_API_KEY` field in `data/conf
 Each mode's AI behavior is governed by a distinct system prompt:
 - **Handwriting Mode**: AI is prohibited from providing code, approaches, or algorithm suggestions. It may only help clarify the problem statement and ask guiding questions about code the student has already written.
 - **Idea Validation Mode**: AI asks clarifying questions to sharpen the student's thinking → generates code strictly following the student's approach → does not redirect or modify the student's chosen direction.
+
+## Problem Graph
+
+1. Generate embedding
+python scripts/analyze_problems.py
+
+pip install FlagEmbedding numpy
+python scripts/generate_embeddings.py
+
+2. Relationship construction
+export DEEPSEEK_API_KEY="sk-..."
+python scripts/infer_relations.py
+
+3. Graph construction
+pip install networkx
+python scripts/build_graph.py
+
 
 ---
 

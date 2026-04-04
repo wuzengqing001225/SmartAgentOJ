@@ -1,3 +1,12 @@
 {
-  "deepseekApiKey": ""
+  "deepseekApiKey": "sk-",
+  "sessionSecret": "your_session_secret",
+  "dailyCallLimit": {
+    "user": 50,
+    "palacestudent": 300,
+    "admin": -1,
+    "superadmin": -1
+  },
+  "loginMaxAttempts": 5,
+  "customProblemLimit": 100
 }
